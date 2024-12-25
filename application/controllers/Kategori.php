@@ -7,6 +7,10 @@ class Kategori extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('m_category','category');
+        // Session kontrolü
+        if (!$this->session->userdata('logged_in')) {
+            redirect('yonetici');
+        }
     }
 
     public function index()
@@ -62,6 +66,51 @@ class Kategori extends CI_Controller {
         $data = $this->category->get_category_id($id);
         echo json_encode($data);
     }
+
+    public function add_category()
+    {
+        $this->form_validation->set_rules('kategori_adi', 'Kategori Adı', 'required|min_length[3]|max_length[50]');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('kategori/ekle');
+        } else {
+            $data = array(
+                'kategori_adi' => $this->input->post('kategori_adi'),
+                'kategori_kodu' => pascalize($this->input->post('kategori_adi'))
+            );
+            
+            $this->M_kategori->add_category($data);
+            redirect('kategori');
+        }
+    }
+
+    public function ekle()
+    {
+        $this->form_validation->set_rules('kategori_adi', 'Kategori Adı', 'required|min_length[3]|max_length[50]');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('sablon');
+            $this->load->view('kategori/ekle');
+        } else {
+            $data = array(
+                'kategori_adi' => $this->input->post('kategori_adi'),
+                'kategori_kodu' => pascalize($this->input->post('kategori_adi')) // Kategori adını pascalize ediyoruz
+            );
+            
+            $this->M_kategori->ekle($data);
+            redirect('kategori');
+        }
+    }
+}
+
+function pascalize($str) {
+    $str = strtolower($str);
+    $str = str_replace(' ', '_', $str);
+    $str = str_replace('-', '_', $str);
+    $str = str_replace('_', ' ', $str);
+    $str = ucwords($str);
+    $str = str_replace(' ', '', $str);
+    return $str;
 }
 
 /* End of file Kategori.php */

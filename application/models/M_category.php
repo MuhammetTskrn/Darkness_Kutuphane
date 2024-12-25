@@ -11,8 +11,8 @@ class M_category extends CI_Model {
     public function save_category()
     {
         $object = array(
-            'category_code' => $this->input->post('category_code'),
-            'category_name' => $this->input->post('category_name')
+            'category_name' => $this->input->post('category_name'),
+            'category_code' => pascalize($this->input->post('category_name'))
         );
         return $this->db->insert('book_category', $object);
     }

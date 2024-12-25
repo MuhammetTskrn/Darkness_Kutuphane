@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+// Normal routes
 $route['default_controller'] = 'yonetici';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -60,3 +61,25 @@ $route['kitap'] = 'kitap';
 $route['kullanici'] = 'kullanici';
 $route['islem'] = 'islem';
 $route['gecmis'] = 'gecmis';
+
+// Match route örneği - SEO dostu kitap URL'leri
+$route['kitap/detay/(:any)'] = function($slug) {
+    return 'kitap/detay/' . $slug;
+};
+
+// Redirect route örnekleri
+$route['eski-panel'] = function() {
+    redirect('kontrol', 'refresh');
+    return;
+};
+
+$route['admin'] = function() {
+    redirect('yonetici', 'refresh');
+    return;
+};
+
+// Post route örneği
+$route['kitap/ekle']['post'] = 'Kitap/add';
+
+// Get route örneği
+$route['kitaplar']['get'] = 'Kitap/index';

@@ -9,6 +9,10 @@ class Islem extends CI_Controller {
         $this->load->model('m_transaction', 'transaction');
         $this->load->model('M_book', 'book');
         $this->load->library('cart');
+        // Session kontrolü
+        if (!$this->session->userdata('logged_in')) {
+            redirect('yonetici');
+        }
     }
 
     public function index()

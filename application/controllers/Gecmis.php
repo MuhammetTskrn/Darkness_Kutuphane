@@ -8,6 +8,10 @@ class Gecmis extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('m_transaction', 'transaction');
+        // Session kontrolü
+        if (!$this->session->userdata('logged_in')) {
+            redirect('yonetici');
+        }
 	}
 
 	public function index()

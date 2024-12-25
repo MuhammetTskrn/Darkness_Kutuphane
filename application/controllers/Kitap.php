@@ -7,11 +7,21 @@ class Kitap extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('m_book', 'book');
+        // Session kontrolü
+        if (!$this->session->userdata('logged_in')) {
+            redirect('yonetici');
+        }
     }
 
     public function index()
     {
         $data['get_book'] = $this->book->get_book();
+        foreach ($data['get_book'] as $book) {
+            // SEO dostu URL oluştur
+            $seo_url = url_title($book->book_title, 'dash', TRUE);
+            // Anchor ile link oluştur
+            $book->detail_link = anchor('kitap/detay/' . $seo_url, 'Detaylar', 'class="btn btn-info btn-sm"');
+        }
         $data['category'] = $this->book->data_category();
         $data['content'] = "g_kitap";
         $this->load->view('sablon', $data);

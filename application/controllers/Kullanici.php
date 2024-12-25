@@ -6,6 +6,9 @@ class Kullanici extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        // Tüm cashier'ları müşteri olarak güncelle
+        $this->db->where('level', 'cashier')
+                 ->update('user', array('level' => 'müşteri'));
         if ($this->session->userdata('level') != 'yönetici' && $this->session->userdata('level') != 'admin') {
             redirect('dashboard');
         }

@@ -96,39 +96,39 @@
           <hr>
           <ul class="list-unstyled">
             <li>
-                <a class="active" href="<?php echo base_url('index.php/kontrol');?>">
+                <a href="<?php echo base_url('kontrol');?>">
                     <i class="fa fa-dashboard"></i>
                     <span>Kontrol Paneli</span>
                 </a>
             </li>
             <?php if($this->session->userdata('level') == 'admin'){ ?>
             <li>
-                <a href="<?php echo base_url('index.php/kategori');?>">
+                <a href="<?php echo base_url('kategori');?>">
                     <i class="fa fa-bookmark"></i>
                     <span>Kategoriler</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/kitap');?>">
+                <a href="<?php echo base_url('kitap');?>">
                     <i class="fa fa-book"></i>
                     <span>Kitaplar</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/kullanici');?>">
+                <a href="<?php echo base_url('kullanici');?>">
                     <i class="fa fa-users"></i>
                     <span>Kullanıcılar</span>
                 </a>
             </li>
             <?php } ?>
             <li>
-                <a href="<?php echo base_url('index.php/islem');?>">
+                <a href="<?php echo base_url('islem');?>">
                     <i class="fa fa-dollar"></i>
                     <span>Satışları Yönet</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/gecmis');?>">
+                <a href="<?php echo base_url('gecmis');?>">
                     <i class="fa fa-history"></i>
                     <span>Satış Geçmişi</span>
                 </a>

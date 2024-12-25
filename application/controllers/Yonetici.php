@@ -26,7 +26,18 @@ class Yonetici extends CI_Controller {
 			$this->form_validation->set_rules('username', 'username', 'trim|required');
 			$this->form_validation->set_rules('password', 'password', 'trim|required');
 			if ($this->form_validation->run() == TRUE) {
-				if ($this->M_admin->get_login() == TRUE) {
+				$username = $this->input->post('username');
+				$password = $this->input->post('password');
+
+				$user = $this->db->get_where('users', ['username' => $username])->row();
+
+				if ($user && password_verify($password, $user->password)) {
+					$data = array(
+						'logged_in' => TRUE,
+						'username' => $user->username,
+						'level' => $user->level
+					);
+					$this->session->set_userdata($data);
 					redirect('kontrol');
 				} else {
 					$this->session->set_flashdata('message', 'Wrong Username and Password');
@@ -56,7 +67,8 @@ class Yonetici extends CI_Controller {
 			$this->form_validation->set_rules('fullname', 'fullname', 'trim|required');
 			$this->form_validation->set_rules('level', 'level', 'trim|required');
 			if ($this->form_validation->run() == TRUE) {
-				if ($this->M_admin->get_register() == TRUE) {
+				$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+				if ($this->M_admin->get_register($password) == TRUE) {
 					redirect('yonetici/index');
 				} else {
 					$this->session->set_flashdata('message', 'Wrong Username and Password');
